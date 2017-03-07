@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8"/>
+        <title>Bitcoin Name Server</title>
+
+        <script>
+        function submit() {
+            var id = document.getElementById("submit-id").value
+            var btcAddr = document.getElementById("address").value
+
+            // Checking inputs
+            if ((id === "") || (btcAddr === "")) {
+                document.getElementById("response").innerHTML = "Enter all fields!"
+            }
+
+            var xhr = new XMLHttpRequest()
+            xhr.open("POST", "/submit")
+            xhr.setRequestHeader("bns-submit-id", id)
+            xhr.setRequestHeader("bns-address", btcAddr)
+            xhr.send(null)
+
+            // Write response to html
+            document.getElementById("response").innerHTML = xhr.responseText
+            console.log(xhr.responseText)
+
+        }
+
+        function resolve() {
+            var id = document.getElementById("resolve-id").value
+        }
+        </script>
+    </head>
+    <body>
+        <center>
+            <h1>Bitcoin Name Server</h1>
+
+            <h2>Submit</h2>
+            <form action="javascript:submit()">
+                <input type="text" id="submit-id" placeholder="User ID"/>
+                <br/>
+                <input type="text" id="address" placeholder="BTC Address"/>
+                <br/>
+                <input type="submit" value="Submit"/>
+            </form>
+
+            <br/>
+            <br/>
+            <br/>
+            <br/>
+
+            <h2>Resolve</h2>
+            <form action="javascript:resolve()">
+                <input type="text" id="resolve-id" placeholder="User ID"/>
+                <br/>
+                <input type="submit" value="Submit"/>
+            </form>
+
+            <br/>
+            <br/>
+            <br/>
+            <br/>
+
+            <p id="response"/>
+        </center>
+    </body>
+</html>
+
