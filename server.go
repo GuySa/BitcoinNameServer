@@ -10,18 +10,34 @@ import (
 )
 
 func SubmitHandler(w http.ResponseWriter, r *http.Request) {
-    var userID []string = r.Header["bns-submit-id"]
-    var btcAddr []string = r.Header["bns-address"]
+    userID := r.Header.Get("bns-submit-id")
+    btcAddr := r.Header.Get("bns-address")
 
-    log.Println("AHHHH!!!!! submit")
-    fmt.Fprintf(w, "you tried to submit:\nid: %s\naddress: %s", userID, btcAddr)
+    if userID == "" {
+        fmt.Println("userID is empty!")
+    } else {
+        fmt.Println("userID is " + userID)
+    }
+
+    if btcAddr == "" {
+        fmt.Println("btcAddr is empty!")
+    } else {
+        fmt.Println("btcAddr is " + btcAddr)
+    }
+
+    fmt.Fprintf(w, "you tried to submit:\nid: %s\naddress: %s\n", userID, btcAddr)
 }
 
 func ResolveHandler(w http.ResponseWriter, r *http.Request) {
-    var userID []string = r.Header["id"]
+    userID := r.Header.Get("bns-resolve-id")
 
-    log.Println("AHHHH!!!!! resolve")
-    fmt.Fprintf(w, "you tried to resolve:\nid: %s", userID[0])
+    if userID == "" {
+        fmt.Println("userID is empty!")
+    } else {
+        fmt.Println("userID is " + userID)
+    }
+
+    fmt.Fprintf(w, "you tried to resolve:\nid: %s\n", userID)
 }
 
 func IndexHandler(w http.ResponseWriter, r *http.Request) {

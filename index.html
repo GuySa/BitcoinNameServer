@@ -11,23 +11,59 @@
 
             // Checking inputs
             if ((id === "") || (btcAddr === "")) {
-                document.getElementById("response").innerHTML = "Enter all fields!"
+                document.getElementById("response").innerText = "Enter all fields!"
+                console.log("Enter all fields!")
+                return
             }
 
             var xhr = new XMLHttpRequest()
-            xhr.open("POST", "/submit")
+
+            xhr.onreadystatechange = function () {
+                if (this.readyState == 4) {
+                    if (this.status == 200) {
+                        // Write response to html
+                        document.getElementById("response").innerText = xhr.responseText
+                        console.log(xhr.responseText)
+                    }
+                    else {
+                        document.getElementById("response").innerText = "response status was " + this.status
+                    }
+                }
+            }
+
+            xhr.open("POST", "/submit", true)
             xhr.setRequestHeader("bns-submit-id", id)
             xhr.setRequestHeader("bns-address", btcAddr)
             xhr.send(null)
-
-            // Write response to html
-            document.getElementById("response").innerHTML = xhr.responseText
-            console.log(xhr.responseText)
-
         }
 
         function resolve() {
             var id = document.getElementById("resolve-id").value
+
+            // Checking inputs
+            if (id === "") {
+                document.getElementById("response").innerHTML = "Enter all fields!"
+                return
+            }
+
+            var xhr = new XMLHttpRequest()
+
+            xhr.onreadystatechange = function () {
+                if (this.readyState == 4) {
+                    if (this.status == 200) {
+                        // Write response to html
+                        document.getElementById("response").innerText = xhr.responseText
+                        console.log(xhr.responseText)
+                    }
+                    else {
+                        document.getElementById("response").innerText = "response status was " + this.status
+                    }
+                }
+            }
+
+            xhr.open("POST", "/resolve", true)
+            xhr.setRequestHeader("bns-resolve-id", id)
+            xhr.send(null)
         }
         </script>
     </head>
