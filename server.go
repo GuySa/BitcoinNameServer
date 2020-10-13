@@ -9,9 +9,9 @@ import (
     "bytes"
 )
 
-func SubmitHandler(w http.ResponseWriter, r *http.Request) {
-    userID := r.Header.Get("bns-submit-id")
-    btcAddr := r.Header.Get("bns-address")
+func SubmitHandler(writer http.ResponseWriter, req *http.Request) {
+    userID := req.Header.Get("bns-submit-id")
+    btcAddr := req.Header.Get("bns-address")
 
     if userID == "" {
         fmt.Println("userID is empty!")
@@ -25,11 +25,11 @@ func SubmitHandler(w http.ResponseWriter, r *http.Request) {
         fmt.Println("btcAddr is " + btcAddr)
     }
 
-    fmt.Fprintf(w, "you tried to submit:\nid: %s\naddress: %s\n", userID, btcAddr)
+    fmt.Fprintf(writer, "you tried to submit:\nid: %s\naddress: %s\n", userID, btcAddr)
 }
 
-func ResolveHandler(w http.ResponseWriter, r *http.Request) {
-    userID := r.Header.Get("bns-resolve-id")
+func ResolveHandler(writer http.ResponseWriter, req *http.Request) {
+    userID := req.Header.Get("bns-resolve-id")
 
     if userID == "" {
         fmt.Println("userID is empty!")
@@ -37,19 +37,19 @@ func ResolveHandler(w http.ResponseWriter, r *http.Request) {
         fmt.Println("userID is " + userID)
     }
 
-    fmt.Fprintf(w, "you tried to resolve:\nid: %s\n", userID)
+    fmt.Fprintf(writer, "you tried to resolve:\nid: %s\n", userID)
 }
 
-func IndexHandler(w http.ResponseWriter, r *http.Request) {
+func IndexHandler(writer http.ResponseWriter, req *http.Request) {
 
     indexFile, err := ioutil.ReadFile("index.html")
 
     if err != nil {
-        fmt.Fprint(w, err)
+        fmt.Fprint(writer, err)
         return
     }
 
-    http.ServeContent(w, r, "index.html", time.Now(), bytes.NewReader(indexFile))
+    http.ServeContent(writer, req, "index.html", time.Now(), bytes.NewReader(indexFile))
 }
 
 func main() {
